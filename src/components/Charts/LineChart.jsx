@@ -66,13 +66,13 @@ const LineChart = ({
         <div className="flex gap-1 items-center self-start text-base font-medium tracking-normal text-stone-900">
           <div className="self-stretch my-auto">{title}</div>
           <img
-            loading="lazy"
+            loading="lazy"  
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/9488b4231f229b936a71eabc22191f9a5608890ef49bbed095b753296fa66fde?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6"
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-4 aspect-square"
           />
         </div>
-        <div className="mt-4" style={{ height: `${height}px` }}>
+        <div className="mt-4 h-full" style={{ height: `${height}px` }}>
           <Line options={defaultOptions} data={defaultData} />
         </div>
       </div>

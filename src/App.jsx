@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-// import BarChart from "./components/Charts/BarChart";
+import BarChart from "./components/Charts/BarChart";
 // import DemandMarketChart from "./components/Charts/DemanMarket";
 import LineChart from "./components/Charts/LineChart";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import StatCard from "./components/StatCard";
 import SugarcaneService from "./service/SugarcaneService";
+import MapView from "./components/MapView";
 
 const App = () => {
   const statCards = [
@@ -51,24 +52,31 @@ const App = () => {
           {
             label: "Produksi (Ton)",
             data: data,
-            borderColor: "rgb(132, 204, 22)",
-            backgroundColor: "rgba(132, 204, 22, 0.5)",
+            borderColor: "#E2A70C",
+            backgroundColor: "#E2A70C",
             borderWidth: 1,
           },
           {
             label: "Luas Hektar",
             data: dataArea,
-            backgroundColor: "rgb(132, 204, 22)",
-            borderColor: "rgba(153,102,255,1)",
+            backgroundColor: "#3DA60D",
+            borderColor: "#3DA60D",
             borderWidth: 1,
           },
         ],
       });
     };
-    fetchData();
+    fetchData().then();
   }, [chartData]);
 
-  console.log(chartData.datasets);
+  const labelsProduction = ["Q1", "Q2", "Q3", "Q4"];
+
+  const datasetProduction = [
+    {
+      data: [150, 140, 100, 150],
+      backgroundColor: "rgb(132, 204, 22)",
+    },
+  ];
   return (
     <div className="flex flex-col bg-white">
       <Header />
@@ -125,18 +133,19 @@ const App = () => {
             title="Pendapatan vs Operasional"
             labels={chartData.labels}
             datasets={chartData.datasets}
-            height={300}
+            height={250}
           />
           <LineChart
             title="Harga Komoditas Gula tahun (2023)"
             labels={chartData.labels}
             datasets={chartData.datasets}
-            height={300}
+            height={250}
           />
-          {/* <PlantationAreaMap />
+          <MapView title="Luas Kebun" />
         </section>
+        <section className="flex flex-wrap gap-6 items-start mt-5 w-full max-md:max-w-full"></section>
         <section className="flex flex-wrap gap-5 items-start mt-5 w-full max-md:max-w-full">
-          {/* <DemandMarketChart />
+          {/* <DemandMarketChart /> */}
           <BarChart
             title="Jumlah Produksi"
             labels={labelsProduction}
@@ -146,7 +155,7 @@ const App = () => {
             title="Target Produksi"
             labels={labelsProduction}
             datasets={datasetProduction}
-          /> */}
+          />
           {/* <FertilizerConsumptionChart /> */}
         </section>
       </main>
