@@ -12,24 +12,24 @@ import MapView from "./components/MapView";
 const App = () => {
   const statCards = [
     {
-      title: "Jumlah Karyawan",
+      label: "Jumlah Karyawan",
       value: "109,928",
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/055cdad99651f99279b4dd7b95ea98f44814aea7de0938b7d07e25277078ba38?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6",
     },
     {
-      title: "Luas Lahan",
+      label: "Luas Lahan",
       value: "20,000ha",
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d5fa6bf42519f1d1157f848beec54d2b81ee949eb883bfd0eed567bade7b0fc1?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6",
     },
     {
-      title: "Luas Kebun",
+      label: "Luas Kebun",
       value: "10,000ha",
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/016b4fefa718447b6010ae682c605d7bc0af362064635b38aff009c252636f72?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6",
     },
     {
-      title: "Pendapatan per Tahun",
-      value: "Rp 100M",
-      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/22ef5ec6a2427bd9e333e352bf7a8d572cf108fa10e53304b74b60d8462f768d?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6",
+      label: "Luas Kebun",
+      value: "10,000ha",
+      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/016b4fefa718447b6010ae682c605d7bc0af362064635b38aff009c252636f72?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6",
     },
   ];
 
@@ -69,66 +69,17 @@ const App = () => {
     fetchData().then();
   }, [chartData]);
 
-  const labelsProduction = ["Q1", "Q2", "Q3", "Q4"];
-
-  const datasetProduction = [
-    {
-      data: [150, 140, 100, 150],
-      backgroundColor: "rgb(132, 204, 22)",
-    },
-  ];
   return (
-    <div className="flex flex-col bg-white">
+    <main className="flex flex-col bg-white min-h-screen">
       <Header />
-      <main className="flex flex-col self-center mt-5 w-full bg-white max-w-[1380px] max-md:max-w-full">
-        <section className="flex flex-col w-full bg-white max-md:max-w-full">
-          <div className="flex flex-wrap gap-10 items-center w-full max-md:max-w-full">
-            <h1 className="flex-1 shrink gap-1 self-stretch my-auto text-lg font-semibold tracking-normal leading-none whitespace-nowrap min-w-[240px] text-stone-900 max-md:max-w-full">
-              Dashboard
-            </h1>
-            <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
-              <div className="flex gap-2 items-start self-stretch px-3 py-1.5 my-auto w-40 bg-white rounded-md border border-solid border-neutral-200">
-                <div className="flex flex-1 shrink gap-1 items-center text-sm tracking-normal leading-none whitespace-nowrap">
-                  <span className="self-stretch my-auto text-neutral-500">
-                    Year:
-                  </span>
-                  <span className="flex-1 shrink self-stretch my-auto font-medium basis-0 text-stone-900">
-                    2023
-                  </span>
-                </div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ed238550e775f8211d336443b4ff11e45d8c5f532a9a0e6209c4c2a1247c9dc7?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6"
-                  alt=""
-                  className="object-contain self-stretch my-auto w-4 aspect-square"
-                />
-              </div>
-              <div className="flex gap-2.5 items-center self-stretch px-4 py-1.5 my-auto text-sm tracking-normal leading-none bg-white rounded border border-solid border-neutral-200 text-stone-900 w-[226px]">
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8e5b7d4016638fd4b850f5e54b788b0598be3f22af8f83db73ad93de161a18d?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6"
-                  alt=""
-                  className="object-contain shrink-0 self-stretch my-auto w-4 aspect-square"
-                />
-                <span className="flex-1 shrink self-stretch my-auto basis-0">
-                  Sragi, Pekalongan
-                </span>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/d5b582602faf340a0f317e2055f5220ce4e44da834c3e4e11f0053a5046a00d3?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6"
-                  alt=""
-                  className="object-contain shrink-0 self-stretch my-auto w-4 aspect-square"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-5 items-start mt-5 w-full max-md:max-w-full">
-            {statCards.map((card, index) => (
-              <StatCard key={index} {...card} />
-            ))}
-          </div>
-        </section>
-        <section className="flex flex-wrap gap-6 items-start mt-5 w-full max-md:max-w-full">
+      <section className="flex flex-col items-center w-full px-4 py-6 bg-white max-w-7xl mx-auto space-y-6">
+        {" "}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          {statCards.map((stat, index) => (
+            <StatCard key={index} {...stat} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
           <LineChart
             title="Pendapatan vs Operasional"
             labels={chartData.labels}
@@ -142,25 +93,20 @@ const App = () => {
             height={250}
           />
           <MapView title="Luas Kebun" />
-        </section>
-        <section className="flex flex-wrap gap-6 items-start mt-5 w-full max-md:max-w-full"></section>
-        <section className="flex flex-wrap gap-5 items-start mt-5 w-full max-md:max-w-full">
-          {/* <DemandMarketChart /> */}
           <BarChart
             title="Jumlah Produksi"
-            labels={labelsProduction}
-            datasets={datasetProduction}
+            labels={chartData.labels}
+            datasets={chartData.datasets}
           />
           <BarChart
             title="Target Produksi"
-            labels={labelsProduction}
-            datasets={datasetProduction}
+            labels={chartData.labels}
+            datasets={chartData.datasets}
           />
-          {/* <FertilizerConsumptionChart /> */}
-        </section>
-      </main>
-      <Footer />
-    </div>
+        </div>
+        <Footer />
+      </section>
+    </main>
   );
 };
 export default App;

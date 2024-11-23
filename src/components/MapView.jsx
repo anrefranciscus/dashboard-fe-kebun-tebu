@@ -13,25 +13,23 @@ const MapView = ({ title }) => {
           <div className="self-stretch my-auto">{title}</div>
         </div>
         <div className="mt-4 h-full">
-        <MapContainer
-  
-      center={[-7.0, 110.5]} // Lokasi tengah Jawa Tengah
-      zoom={9} // Level zoom lebih kecil untuk melihat banyak kota
-      style={{ height: "250px", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      
-      {/* Marker untuk tiap lokasi */}
-      {locations.map((loc) => (
-        <Marker key={loc.id} position={loc.coords}>
-          <Popup>{loc.name}</Popup>
-        </Marker>
-      ))}
-    </MapContainer>
-          
+          <MapContainer
+            center={[-7.0, 110.5]} // Lokasi tengah Jawa Tengah
+            zoom={9} // Level zoom lebih kecil untuk melihat banyak kota
+            style={{ height: "250px", width: "100%" }}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+
+            {/* Marker untuk tiap lokasi */}
+            {locations.map((loc) => (
+              <Marker key={loc.id} position={loc.coords}>
+                <Popup>{loc.name}</Popup>
+              </Marker>
+            ))}
+          </MapContainer>
         </div>
       </div>
     </div>
