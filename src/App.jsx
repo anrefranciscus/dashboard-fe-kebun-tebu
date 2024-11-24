@@ -79,21 +79,23 @@ const App = () => {
             <StatCard key={index} {...stat} />
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
           <LineChart
             title="Pendapatan vs Operasional"
             labels={chartData.labels}
             datasets={chartData.datasets}
-            height={250}
+            height={280}
           />
           <LineChart
             title="Harga Komoditas Gula tahun (2023)"
             labels={chartData.labels}
             datasets={chartData.datasets}
-            height={250}
+            height={280}
           />
           <MapView title="Luas Kebun" />
-          <BarChart
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+        <BarChart
             title="Jumlah Produksi"
             labels={chartData.labels}
             datasets={chartData.datasets}
