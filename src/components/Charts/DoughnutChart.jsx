@@ -1,65 +1,56 @@
 import { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import ChartService from "../../service/ChartService";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-const BarChart = ({
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+const DoughnutChart = ({
   title = "Chart Title",
   rawData = [],
   filterKey = "tanggal_tanam",
   filterOptions = [],
   labelKey = "lokasi",
-  datasetConfigs = [], // Array konfigurasi dataset
+  valueKey = "produksi_ton",
   options = {},
   containerStyle = {},
 }) => {
   const [selectedFilter, setSelectedFilter] = useState(filterOptions[0]);
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const [filteredData, setFilteredData] = useState([]);
+
   useEffect(() => {
-    const filteredData = ChartService.filterDataByYear(
-      rawData,
-      filterKey,
-      selectedFilter
-    );
-    const transformedData = ChartService.transformDataForChart(
-      filteredData,
-      labelKey,
-      datasetConfigs
-    );
-    setChartData(transformedData);
-  }, [selectedFilter, rawData, filterKey, labelKey, datasetConfigs]);
+    // Filter data based on the selected filter
+    const dataForFilter = rawData.filter((item) => {
+      const filterValue = new Date(item[filterKey]).getFullYear();
+      return filterValue.toString() === selectedFilter;
+    });
+    setFilteredData(dataForFilter);
+  }, [selectedFilter, rawData, filterKey]);
+
+  // Transform filtered data into chart.js format
+  const chartLabels = filteredData.map((item) => item[labelKey]);
+  const chartData = {
+    labels: chartLabels,
+    datasets: [
+      {
+        label: "Produksi (ton)",
+        data: filteredData.map((item) => parseFloat(item[valueKey])),
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 0,
+      },
+    ],
+  };
 
   const defaultOptions = {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 300,
-        ticks: {
-          stepSize: 50,
-        },
-      },
-    },
+    cutout: '70%',
     plugins: {
       legend: {
-        display: false,
+        display: "false",
+      },
+      title: {
+        display: true,
+        text: title,
       },
     },
     ...options,
@@ -95,10 +86,10 @@ const BarChart = ({
         </div>
       </div>
       <div className="mt-5 w-full h-[300px]">
-        <Bar options={defaultOptions} data={chartData} />
+        <Doughnut options={defaultOptions} data={chartData} />
       </div>
     </div>
   );
 };
 
-export default BarChart;
+export default DoughnutChart;

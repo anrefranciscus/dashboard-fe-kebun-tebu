@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://sugarcane-nine.vercel.app/kebun-tebu",
+        target: "https://sugarcane-nine.vercel.app/kebun-tebu/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

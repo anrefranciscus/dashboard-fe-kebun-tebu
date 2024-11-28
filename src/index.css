@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.custom-marker-cluster {
+    background-color: rgba(51, 136, 255, 0.6);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 33px;
+    width: 33px;
+    height: 33px;
+    border: 2px solid rgba(51, 136, 255, 1);
+  }
+  
+  .cluster-icon {
+    display: inline-block;
+    line-height: inherit;
+  }
+  

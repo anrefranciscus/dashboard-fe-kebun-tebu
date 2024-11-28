@@ -32,42 +32,29 @@ const App = () => {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/016b4fefa718447b6010ae682c605d7bc0af362064635b38aff009c252636f72?placeholderIfAbsent=true&apiKey=19cc7fcb65f54b38a4924bab685353e6",
     },
   ];
-
-  // const [loading, setLoading] = useState(true);
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [],
-  });
+  const datasetConfigs = [
+    {
+      label: "Produksi (ton)",
+      valueKey: "produksi_ton",
+      backgroundColor: "#E2A70C",
+      borderColor: "#E2A70C",
+    },
+    {
+      label: "Luas Hektar",
+      valueKey: "luas_hektar",
+      backgroundColor: "#3DA60D",
+      borderColor: "#3DA60D",
+    },
+  ];
+  const [rawData, setRawData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       // setLoading(false);
-      const response = await SugarcaneService.get();
-      const labels = response.data.map((item) => item.lokasi);
-      const data = response.data.map((item) => item.produksi_ton);
-      const dataArea = response.data.map((item) => item.luas_hektar);
-      setChartData({
-        ...chartData,
-        labels,
-        datasets: [
-          {
-            label: "Produksi (Ton)",
-            data: data,
-            borderColor: "#E2A70C",
-            backgroundColor: "#E2A70C",
-            borderWidth: 1,
-          },
-          {
-            label: "Luas Hektar",
-            data: dataArea,
-            backgroundColor: "#3DA60D",
-            borderColor: "#3DA60D",
-            borderWidth: 1,
-          },
-        ],
-      });
+      const response = await SugarcaneService.getProcessedData();
+      setRawData(response.rawData);
     };
     fetchData().then();
-  }, [chartData]);
+  }, [rawData]);
 
   return (
     <main className="flex flex-col bg-white min-h-screen">
@@ -79,31 +66,45 @@ const App = () => {
             <StatCard key={index} {...stat} />
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
           <LineChart
             title="Pendapatan vs Operasional"
-            labels={chartData.labels}
-            datasets={chartData.datasets}
-            height={280}
+            rawData={rawData}
+            filterKey="tanggal_tanam"
+            filterOptions={["2023", "2024"]}
+            labelKey="lokasi"
+            datasetConfigs={datasetConfigs}
           />
           <LineChart
             title="Harga Komoditas Gula tahun (2023)"
-            labels={chartData.labels}
-            datasets={chartData.datasets}
-            height={280}
+            rawData={rawData}
+            filterKey="tanggal_tanam"
+            filterOptions={["2023", "2024"]}
+            labelKey="lokasi"
+            datasetConfigs={datasetConfigs}
           />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 w-full">
           <MapView title="Luas Kebun" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-        <BarChart
-            title="Jumlah Produksi"
-            labels={chartData.labels}
-            datasets={chartData.datasets}
+          <BarChart
+            title="Produksi dan Luas Lahan"
+            rawData={rawData}
+            filterKey="tanggal_tanam"
+            filterOptions={["2023", "2024"]}
+            labelKey="lokasi"
+            datasetConfigs={datasetConfigs}
+            containerStyle={{ maxWidth: "600px" }}
           />
           <BarChart
-            title="Target Produksi"
-            labels={chartData.labels}
-            datasets={chartData.datasets}
+            title="Produksi dan Luas Lahan"
+            rawData={rawData}
+            filterKey="tanggal_tanam"
+            filterOptions={["2023", "2024"]}
+            labelKey="lokasi"
+            datasetConfigs={datasetConfigs}
+            containerStyle={{ maxWidth: "600px" }}
           />
         </div>
         <Footer />
