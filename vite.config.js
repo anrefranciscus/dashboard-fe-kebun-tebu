@@ -5,12 +5,12 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    proxy: {
-      "/api": {
-        target: "https://sugarcane-nine.vercel.app/kebun-tebu",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
+    // proxy: {
+    //   "/api": {
+    //     target: "https://sugarcane-nine.vercel.app/kebun-tebu",
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
   },
 });

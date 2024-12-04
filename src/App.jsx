@@ -49,7 +49,6 @@ const App = () => {
   const [rawData, setRawData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      // setLoading(false);
       const response = await SugarcaneService.getProcessedData();
       setRawData(response.rawData);
     };

@@ -1,11 +1,25 @@
-import apiClient from "../shared/apiClient"
+// import apiClient from "../shared/apiClient"
+import data from "../data/kebun-tebu.json"
+const rawData = data;
 
+const get = async () => {
+  // Pastikan rawData adalah array
+  if (!Array.isArray(rawData)) {
+    throw new Error("rawData harus berupa array");
+  }
 
+  // Jika rawData berisi data biasa, langsung kembalikan
+  const response = await Promise.all(
+    rawData.map(async (item) => {
+      // Jika item membutuhkan pemrosesan async, tambahkan logika di sini
+      return item; // Sesuaikan jika perlu
+    })
+  );
 
-const get =  async () => {
-    const response = await apiClient.get()
-    return response
-}
+  return {
+    data: response,
+  };
+};
 
 
 const getProcessedData = async () => {

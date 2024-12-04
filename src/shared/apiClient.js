@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL: "https://sugarcane-nine.vercel.app/kebun-tebu",
   headers: {
     "Content-Type": "application/json",
   },
