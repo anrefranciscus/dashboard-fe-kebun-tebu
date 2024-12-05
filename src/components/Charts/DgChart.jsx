@@ -5,18 +5,34 @@ import {
   ArcElement,
   Tooltip,
   Legend,
+  Title,
 } from "chart.js";
 import ChartService from "../../service/ChartService";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-const DoughnutChart = ({
+const DgChart = ({
   title = "Tingkat Kehadiran",
   rawData = [],
-  filterKey = "kondisi_tanaman",
-  filterOptions = ["Mingguan"],
-  labelKey = "status_kehadiran",
-  datasetConfigs = [{ label: "Sehat", color: "#65A30D" }, { label: "Tanpa Keterangan", color: "#EF4444" }, { label: "Izin", color: "#EAB308" }],
+  filterKey = "tanggal",
+  filterOptions = ["Mingguan", "Bulanan", "Tahunan"],
+  datasetConfigs = [
+    {
+      label: "Hadir",
+      data: [70],
+      backgroundColor: "#65A30D",
+    },
+    {
+      label: "Tanpa Keterangan",
+      data: [15],
+      backgroundColor: "#EF4444",
+    },
+    {
+      label: "Izin",
+      data: [15],
+      backgroundColor: "#EAB308",
+    },
+  ],
   options = {},
   containerStyle = {},
 }) => {
@@ -24,7 +40,6 @@ const DoughnutChart = ({
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
   useEffect(() => {
-    // Filter and transform the raw data into chart format
     const filteredData = ChartService.filterDataByYear(
       rawData,
       filterKey,
@@ -32,17 +47,22 @@ const DoughnutChart = ({
     );
     const transformedData = ChartService.transformDataForChart(
       filteredData,
-      labelKey,
+      "kategori",
       datasetConfigs
     );
-    setChartData(transformedData);
-  }, [selectedFilter, rawData, filterKey, labelKey, datasetConfigs]);
+    if (JSON.stringify(transformedData) !== JSON.stringify(chartData)) {
+        setChartData(transformedData);
+      }
+  }, [selectedFilter, rawData, filterKey, datasetConfigs, chartData]);
 
   const defaultOptions = {
     responsive: true,
     plugins: {
       legend: {
         position: "top",
+      },
+      tooltip: {
+        enabled: true,
       },
     },
     ...options,
@@ -66,21 +86,23 @@ const DoughnutChart = ({
                 />
                 <div className="gap-1 self-stretch my-auto">{title}</div>
               </div>
-              <select
-                className="flex gap-2 items-start self-stretch px-3 py-1.5 my-auto bg-white rounded-md border border-solid border-neutral-200 w-[120px]"
-                onChange={(e) => setSelectedFilter(e.target.value)}
-                value={selectedFilter}
-              >
-                {filterOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+              <div className="flex gap-2 items-start px-3 py-1.5 bg-white rounded-md border border-solid border-neutral-200 w-[120px]">
+                <select
+                  className="flex-1 shrink gap-1 self-stretch text-sm font-medium tracking-normal leading-none whitespace-nowrap text-stone-900"
+                  onChange={(e) => setSelectedFilter(e.target.value)}
+                  value={selectedFilter}
+                >
+                  {filterOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
           <div className="w-[300px] h-[300px]">
-            <Doughnut options={defaultOptions} data={chartData} />
+            <Doughnut data={chartData} options={defaultOptions} />
           </div>
         </div>
       </div>
@@ -88,4 +110,4 @@ const DoughnutChart = ({
   );
 };
 
-export default DoughnutChart;
+export default DgChart;
